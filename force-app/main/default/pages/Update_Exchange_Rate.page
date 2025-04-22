@@ -1,0 +1,12 @@
+<apex:page controller="ExchangeRateVFController" showHeader="true" lightningStylesheets="true">
+    <apex:form >
+        <apex:pageMessages />
+        <apex:commandButton value="Get Exchange Rate" action="{!runExchange}" rerender="msg"/>
+        
+        <apex:outputPanel id="msg">
+            <apex:outputText value="{!message}" rendered="{!NOT(ISBLANK(message))}" style="font-weight: bold;" />
+        </apex:outputPanel>
+
+        <apex:commandButton value="Back to Opportunity" action="{!goBack}" rendered="{!NOT(ISBLANK(message))}" />
+    </apex:form>
+</apex:page>
