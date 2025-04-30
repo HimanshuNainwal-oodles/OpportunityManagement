@@ -1,5 +1,5 @@
 public class WeeklyOpportunitySummaryScheduler implements Schedulable{
-    void execute(SchedulableContext sc) {
+    public void execute(SchedulableContext sc) {
         WeeklyOpportunitySummarySender.sendSummaryEmails();
     }
 }
