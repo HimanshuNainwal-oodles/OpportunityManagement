@@ -18,7 +18,7 @@ public class WeeklyOpportunitySummarySender {
         }
         Set<Id> ownerIds = oppsByOwner.keySet();
         
-        Map<Id, User> user = new Map<Id,User>([
+        Map<Id, User> users = new Map<Id,User>([
             SELECT Id, Name , Email from User WHERE Id IN :ownerIds]
             );
         
@@ -42,7 +42,7 @@ public class WeeklyOpportunitySummarySender {
     }
     
     private static String buildEmailBody(List<Opportunity> opps, String ownerName) {
-        String htmlBody = '<p>Hello ownerName,</p>' +
+        String htmlBody = '<p>Hello '+ ownerName+',</p>' +
             '<p>Here is your summary of open Opportunities:</p>' +
             '<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px;">' +
             '<thead style="background-color: #f2f2f2;">' +
