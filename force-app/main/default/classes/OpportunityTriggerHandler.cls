@@ -4,7 +4,7 @@ public class OpportunityTriggerHandler {
         FROM EmailTemplate_Opp_manage__mdt
         WHERE DeveloperName =:'Notify_Manager'];
         
-        Set<UserRole> managerIds = [SELECT Id FROM UserRole WHERE Name=:'Sales Manager'];
+        List<UserRole> managerIds = [SELECT Id FROM UserRole WHERE Name=:'Sales Manager'];
         
         List<User> managers = [ SELECT Name, Email FROM User WHERE UserRoleId IN :managerIds];
         
