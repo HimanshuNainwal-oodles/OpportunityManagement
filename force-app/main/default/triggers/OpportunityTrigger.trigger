@@ -13,7 +13,7 @@ trigger OpportunityTrigger on Opportunity (after insert, after update) {
                 OpportunityApprovalService.submitForApproval(opp);
             }
         }
-        else{
+        if(opp.Amount >= 50000){
             OpportunityTriggerHandler.NotifyManager(opp);
         }
     }

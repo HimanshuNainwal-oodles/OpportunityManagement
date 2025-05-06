@@ -4,19 +4,29 @@ public class OpportunityTriggerHandler {
         FROM EmailTemplate_Opp_manage__mdt
         WHERE DeveloperName =:'Notify_Manager'];
         
+        Set<Id> managerIds = [SELECT Id FROM UserRole WHERE Name=:'Sales Manager'];
         
-        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email.setSubject(temp.Subject__c);
-        email.setToAddresses(new String[]{'proddalakekau-8179@yopmail.com'});
-        // email.setBccAddresses('himanshunainwal0@gmail.com');
-        String body = buildEmailBody(opp, temp.Body__c);
-        email.setHtmlBody(body);
-        try {
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
-            System.debug('Send Successfully');
+        List<User> managers = [ SELECT Name, Email FROM User WHERE UserRoleId IN :managerIds];
+        
+        List<String> managerMail = new List<String>();
+        for(User us : managers){
+            managerMail.add(us.Email);
+        }
+        if(managerMail != null){
             
-        } catch (Exception e) {
-            System.debug('Error While Sending Mail: '+ e.getMessage());
+            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+            email.setSubject(temp.Subject__c);
+            email.setToAddresses(managerMail);
+            email.setBccAddresses(new String[]{'himanshunainwal0@gmail.com'});
+            String body = buildEmailBody(opp, temp.Body__c);
+            email.setHtmlBody(body);
+            try {
+                Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
+                System.debug('Send Successfully');
+                
+            } catch (Exception e) {
+                System.debug('Error While Sending Mail: '+ e.getMessage());
+            }
         }
     }
     
